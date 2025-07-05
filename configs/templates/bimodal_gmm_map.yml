@@ -1,0 +1,18 @@
+experiment_name: map_baseline
+
+seed: 42
+
+model:
+  type: Bimodal_GMM_MAP_Estimator
+  params:
+    shift: 1
+
+data:
+  type: basic          # [ 'basic' , 'torch' ]
+  path: data/train.pickle
+
+eval:
+  type: basic          # [ 'basic' , 'torch' ]
+  test_path: data/test.pickle
+  metrics:
+    - accuracy

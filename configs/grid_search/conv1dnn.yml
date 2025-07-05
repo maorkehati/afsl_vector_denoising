@@ -1,0 +1,11 @@
+config: configs/templates/conv1dnn.yml
+search:
+  model.params.input_channels: [1]
+  model.params.output_channels: [1]
+  model.params.kernel_size: [3]
+  model.params.depth: [8]
+  model.params.width: [32]
+  model.params.activation: [ 'gelu' ]
+  training.epochs: [50]
+  training.batch_size: [128]
+  training.learning_rate: [3e-2]

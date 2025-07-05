@@ -1,0 +1,18 @@
+experiment_name: linear_regression
+
+seed: 42
+
+model:
+  type: Linear_Regression
+  params:
+    L: 5
+
+data:
+  type: basic          # [ 'basic' , 'torch' ]
+  path: data/train.pickle
+
+eval:
+  type: basic          # [ 'basic' , 'torch' ]
+  test_path: data/test.pickle
+  metrics:
+    - accuracy

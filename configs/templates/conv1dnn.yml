@@ -1,0 +1,37 @@
+experiment_name: linear_regression
+
+seed: 42
+
+model:
+  type: Conv1DNet
+  params:
+    input_channels: 1
+    output_channels: 1
+    kernel_size: 3
+    depth: 3
+    width: 32
+    activation: relu # [ 'relu' , 'tanh' , 'gelu' , 'sigmoid' , 'leaky_relu' ]
+
+training:
+  epochs: 10
+  batch_size: 32
+  learning_rate: 1e-3
+  loss_function: bce
+
+data:
+  type: torch
+  path: data/train.pickle
+
+eval:
+  type: torch
+  test_path: data/test.pickle
+  metrics:
+    - accuracy
+    - f1_score
+    - precision
+    - recall
+    - roc_auc
+    - hamming_distance
+    - bce
+    - brier
+    - ece

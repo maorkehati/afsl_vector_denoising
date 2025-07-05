@@ -1,0 +1,21 @@
+experiment_name: map_baseline
+
+seed: 42
+
+model:
+  type: MAP_Estimator
+  params:
+    shift: -1           # Shift to align X_{i-1} with Y_i
+data:
+  type: basic          # [ 'basic' , 'torch' ]
+  path: data/train.pickle
+
+eval:
+  type: basic          # [ 'basic' , 'torch' ]
+  test_path: data/test.pickle
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - roc_auc
+    - f1_score
