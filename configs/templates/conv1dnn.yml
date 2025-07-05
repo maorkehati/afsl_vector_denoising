@@ -8,14 +8,14 @@ model:
     input_channels: 1
     output_channels: 1
     kernel_size: 3
-    depth: 3
+    depth: 8
     width: 32
-    activation: relu # [ 'relu' , 'tanh' , 'gelu' , 'sigmoid' , 'leaky_relu' ]
+    activation: gelu # [ 'relu' , 'tanh' , 'gelu' , 'sigmoid' , 'leaky_relu' ]
 
 training:
-  epochs: 10
-  batch_size: 32
-  learning_rate: 1e-3
+  epochs: 50
+  batch_size: 128
+  learning_rate: 3e-2
   loss_function: bce
 
 data:
@@ -35,3 +35,10 @@ eval:
     - bce
     - brier
     - ece
+
+test:
+  type: torch
+  test_path: data/test.pickle
+  output_file: data/test_predictions.pickle
+
+runner: full_train

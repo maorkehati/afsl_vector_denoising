@@ -16,3 +16,9 @@ eval:
   test_path: data/test.pickle
   metrics:
     - accuracy
+
+test:
+  type: basic
+  test_path: data/test.pickle
+
+runner: kfold

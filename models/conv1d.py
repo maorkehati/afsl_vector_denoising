@@ -56,10 +56,11 @@ class Conv1DNet(nn.Module):
 
         self.net = nn.Sequential(*layers)
 
-    def forward(self, Y: torch.Tensor) -> torch.Tensor:
+    def forward(self, Y: torch.Tensor, binary: bool = False) -> torch.Tensor:
         """
         Args:
             Y: [B, S] input signal (e.g., corrupted real-valued observations)
+            binary: Whether to output final binary predictions (e.g., for classification tasks).
 
         Returns:
             Tensor: [B, S] predicted output (e.g., binary or continuous signal)
@@ -69,4 +70,7 @@ class Conv1DNet(nn.Module):
 
         Y = Y.unsqueeze(1)  # [B, 1, S]
         out = self.net(Y)   # [B, 1, S]
-        return out.squeeze(1)  # [B, S]
+        out = out.squeeze(1)  # [B, S]
+        if binary:
+            out = (torch.sigmoid(out) > 0.5).int()  # binarize
+        return out

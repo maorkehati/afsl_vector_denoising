@@ -15,7 +15,13 @@ eval:
   test_path: data/test.pickle
   metrics:
     - accuracy
+    - f1_score
     - precision
     - recall
     - roc_auc
-    - f1_score
+
+test:
+  type: basic
+  test_path: data/test.pickle
+
+runner: kfold

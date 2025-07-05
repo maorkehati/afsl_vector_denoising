@@ -4,18 +4,6 @@ import torch.optim as optim
 from tqdm import tqdm
 
 def get_loss_function(name: str) -> nn.Module:
-    """
-    Returns the appropriate PyTorch loss function based on the name.
-
-    Args:
-        name (str): Name of the loss function.
-
-    Returns:
-        nn.Module: Corresponding loss function module.
-
-    Raises:
-        ValueError: If the loss name is unsupported.
-    """
     name = name.lower()
     if name in ["bce", "binary_crossentropy", "bcewithlogits"]:
         return nn.BCEWithLogitsLoss()
@@ -26,29 +14,12 @@ def get_loss_function(name: str) -> nn.Module:
     else:
         raise ValueError(f"Unsupported loss function: '{name}'")
 
-
 def train_torch_model(model, train_loader, val_loader, config, device="cuda" if torch.cuda.is_available() else "cpu"):
-    """
-    Trains a model using torch DataLoader and returns predictions on the validation set.
-
-    Args:
-        model (nn.Module): The model to train.
-        train_loader (DataLoader): DataLoader for training data.
-        val_loader (DataLoader): DataLoader for validation data.
-        config (dict): Config containing optimizer and training parameters.
-        device (str): Device to train on.
-
-    Returns:
-        preds (Tensor): Predictions on the full validation set.
-        targets (Tensor): Ground truth labels.
-    """
-
     model.to(device)
     model.train()
 
     training_cfg = config.get("training", {})
-    lr = training_cfg.get("learning_rate", 1e-3)
-    lr = float(lr)  # Ensure learning rate is a float
+    lr = float(training_cfg.get("learning_rate", 1e-3))
     epochs = training_cfg.get("epochs", 10)
     loss_name = training_cfg.get("loss", "bce")
 
@@ -70,6 +41,10 @@ def train_torch_model(model, train_loader, val_loader, config, device="cuda" if 
 
         print(f"📉 Epoch {epoch+1}: Loss = {total_loss / len(train_loader):.4f}")
 
+    # --- Skip validation if not provided ---
+    if val_loader is None:
+        val_loader = train_loader
+
     # --- Evaluate on validation set ---
     model.eval()
     preds = []
@@ -78,7 +53,7 @@ def train_torch_model(model, train_loader, val_loader, config, device="cuda" if 
         for X_batch, Y_batch in val_loader:
             X_batch, Y_batch = X_batch.to(device), Y_batch.to(device)
             logits = model(Y_batch)
-            pred = (logits > 0).float()  # binary prediction threshold at 0
+            pred = (logits > 0).float()
             preds.append(pred.cpu())
             targets.append(X_batch.cpu())
 

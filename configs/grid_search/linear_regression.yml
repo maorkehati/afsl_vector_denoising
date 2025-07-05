@@ -1,3 +1,3 @@
 config: configs/templates/linear_regression.yml
 search:
-  model.params.L: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,30,50]
+  model.params.L: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,30,50,100,200]
