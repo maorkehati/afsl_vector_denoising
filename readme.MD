@@ -1,7 +1,7 @@
 # 🧠 Binary Vector Denoising
 
-*Report:* report.pdf
-*Predictions:* test_predictions.pickle
+📄 **Report:** [report.pdf](./report.pdf)  
+📦 **Predictions:** [test_predictions.pickle](./test_predictions.pickle)
 
 A flexible and modular framework for experimenting with signal-based binary classification models — from classical MAP estimators to neural networks — using k-fold validation and extensible data/model pipelines.
 
